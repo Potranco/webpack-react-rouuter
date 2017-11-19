@@ -1,6 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import MyComponent from './MyComponent';
-require('./scss/style.scss');
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
-ReactDOM.render(<MyComponent />, document.getElementById('app'));
+class App extends React.Component {
+
+  constructor (props) {
+    super(props)
+  }
+
+  render () {
+    const Home = () => <h1>home</h1>;
+    return (
+        <Router>
+          <Route path="/" component={Home} />
+        </Router>
+    );
+  }
+}
+
+export default App;

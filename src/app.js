@@ -1,13 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, NavLink, Switch } from 'react-router-dom';
 
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Contact = () => <h1>Contact</h1>;
 
 const isActivefunc = (match, location) => {
-  console.log(match, location);
-  return false;
+  return match;
 };
 
 const Links = () => (
@@ -19,6 +18,8 @@ const Links = () => (
     <NavLink
       isActive={isActivefunc}
       to="/contact">Contact</NavLink>
+    <NavLink to="/page/hola">Page</NavLink>
+    <NavLink to="/page">Page not</NavLink>
   </nav>
 );
 
@@ -26,9 +27,17 @@ const App = () => (
   <Router>
     <div>
       <Links />
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/contact" component={Contact} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/page/:page" render={(route) => {
+          const {match} = route;
+          return <h1>PAGE { match.params.page || 'page base' }</h1>
+          }
+        } />
+        <Route render={() => <h1>Page not found</h1>} />
+      </Switch>
     </div>
   </Router>
 );
